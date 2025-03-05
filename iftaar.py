@@ -20,14 +20,16 @@ def select_members():
 
 def blinking_selection_animation(members):
     placeholder = st.empty()
-    
-    for _ in range(10):  # Blink effect
-        random.shuffle(members)
+    for _ in range(15):  # Blink effect
+        shuffled_names = random.sample(members, min(len(members), 10))  # Show 10 random names at a time
+        names_display = " | ".join(shuffled_names)
         with placeholder:
-            st.subheader(f"🔄 {members[0]} 🔄")
-        time.sleep(0.3)
+            st.markdown(f"### 🔄 {names_display} 🔄")
+        time.sleep(0.2)
     
-    return members.pop(0)
+    selected = random.choice(members)
+    members.remove(selected)
+    return selected
 
 def main():
     st.title("🔮 Random Member Selector")
@@ -38,10 +40,12 @@ def main():
         remaining_pool = all_candidates.copy()
         
         st.write("### Selecting Members:")
+        placeholder = st.empty()
         
         for _ in range(10):
             selected = blinking_selection_animation(remaining_pool)
-            st.subheader(f"🎉 {selected} 🎉")
+            with placeholder:
+                st.subheader(f"🎉 {selected} 🎉")
             selected_members.append(selected)
             time.sleep(1)
         
@@ -50,13 +54,15 @@ def main():
         st.write("### 🎊 Final Selected Members 🎊")
         final_placeholder = st.empty()
         
-        for i in range(3):
+        for _ in range(3):
             with final_placeholder:
                 st.subheader("✨✨✨✨✨")
             time.sleep(0.5)
             with final_placeholder:
                 st.subheader("🎇🎇🎇🎇🎇")
             time.sleep(0.5)
+        
+        final_placeholder.empty()
         
         for member in selected_members:
             st.success(f"✅ {member}")
