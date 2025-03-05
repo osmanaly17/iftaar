@@ -19,10 +19,10 @@ def select_members():
     return fixed_members + random_members
 
 def blinking_selection_animation(members, display_placeholder):
-    for _ in range(15):  # Blink effect
+    for _ in range(20):  # Slower blinking effect
         selected_name = random.choice(members)
-        display_placeholder.markdown(f"### 🔄 {selected_name} 🔄")
-        time.sleep(0.1)
+        display_placeholder.markdown(f"<h2 style='text-align: center;'>🔄 {selected_name} 🔄</h2>", unsafe_allow_html=True)
+        time.sleep(0.3)
     
     selected = random.choice(members)
     members.remove(selected)
@@ -40,9 +40,9 @@ def main():
         
         for _ in range(10):
             selected = blinking_selection_animation(remaining_pool, display_placeholder)
-            display_placeholder.markdown(f"## 🎉 {selected} 🎉")
+            display_placeholder.markdown(f"<h1 style='text-align: center;'>🎉 {selected} 🎉</h1>", unsafe_allow_html=True)
             selected_members.append(selected)
-            time.sleep(1)
+            time.sleep(1.5)
         
         time.sleep(1)
         
@@ -50,15 +50,15 @@ def main():
         final_placeholder = st.empty()
         
         for _ in range(3):
-            final_placeholder.subheader("✨✨✨✨✨")
-            time.sleep(0.5)
-            final_placeholder.subheader("🎇🎇🎇🎇🎇")
-            time.sleep(0.5)
+            final_placeholder.markdown("<h2 style='text-align: center;'>✨✨✨✨✨</h2>", unsafe_allow_html=True)
+            time.sleep(0.7)
+            final_placeholder.markdown("<h2 style='text-align: center;'>🎇🎇🎇🎇🎇</h2>", unsafe_allow_html=True)
+            time.sleep(0.7)
         
         final_placeholder.empty()
         
         for member in selected_members:
-            st.success(f"✅ {member}")
+            st.markdown(f"<h3 style='text-align: center; color: green;'>✅ {member}</h3>", unsafe_allow_html=True)
     
 if __name__ == "__main__":
     main()
