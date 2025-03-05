@@ -16,16 +16,16 @@ def select_members():
     random.shuffle(remaining_members)
     random_members = random.sample(remaining_members, 5)
     
-    return fixed_members + random_members
+    return fixed_members + random_members, all_members  # Return full list for blinking effect
 
-def blinking_selection_animation(members, display_placeholder):
+def blinking_selection_animation(all_members, selected_pool, display_placeholder):
     for _ in range(20):  # Slower blinking effect
-        selected_name = random.choice(members)
+        selected_name = random.choice(all_members)  # Blink from full list
         display_placeholder.markdown(f"<h2 style='text-align: center;'>🔄 {selected_name} 🔄</h2>", unsafe_allow_html=True)
         time.sleep(0.3)
     
-    selected = random.choice(members)
-    members.remove(selected)
+    selected = random.choice(selected_pool)
+    selected_pool.remove(selected)
     return selected
 
 def main():
@@ -33,13 +33,13 @@ def main():
     
     if st.button("Start Selection 🎲"):
         selected_members = []
-        all_candidates = select_members()
+        all_candidates, all_members = select_members()
         remaining_pool = all_candidates.copy()
         
         display_placeholder = st.empty()
         
         for _ in range(10):
-            selected = blinking_selection_animation(remaining_pool, display_placeholder)
+            selected = blinking_selection_animation(all_members, remaining_pool, display_placeholder)
             display_placeholder.markdown(f"<h1 style='text-align: center;'>🎉 {selected} 🎉</h1>", unsafe_allow_html=True)
             selected_members.append(selected)
             time.sleep(1.5)
