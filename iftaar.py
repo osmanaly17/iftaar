@@ -21,10 +21,9 @@ def select_members():
 def blinking_selection_animation(members):
     placeholder = st.empty()
     for _ in range(15):  # Blink effect
-        shuffled_names = random.sample(members, min(len(members), 10))  # Show 10 random names at a time
-        names_display = " | ".join(shuffled_names)
+        selected_name = random.choice(members)
         with placeholder:
-            st.markdown(f"### 🔄 {names_display} 🔄")
+            st.markdown(f"### 🔄 {selected_name} 🔄")
         time.sleep(0.2)
     
     selected = random.choice(members)
@@ -45,7 +44,7 @@ def main():
         for _ in range(10):
             selected = blinking_selection_animation(remaining_pool)
             with placeholder:
-                st.subheader(f"🎉 {selected} 🎉")
+                st.markdown(f"## 🎉 {selected} 🎉")
             selected_members.append(selected)
             time.sleep(1)
         
