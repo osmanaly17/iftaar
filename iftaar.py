@@ -18,13 +18,11 @@ def select_members():
     
     return fixed_members + random_members
 
-def blinking_selection_animation(members):
-    placeholder = st.empty()
+def blinking_selection_animation(members, display_placeholder):
     for _ in range(15):  # Blink effect
         selected_name = random.choice(members)
-        with placeholder:
-            st.markdown(f"### 🔄 {selected_name} 🔄")
-        time.sleep(0.2)
+        display_placeholder.markdown(f"### 🔄 {selected_name} 🔄")
+        time.sleep(0.1)
     
     selected = random.choice(members)
     members.remove(selected)
@@ -38,13 +36,11 @@ def main():
         all_candidates = select_members()
         remaining_pool = all_candidates.copy()
         
-        st.write("### Selecting Members:")
-        placeholder = st.empty()
+        display_placeholder = st.empty()
         
         for _ in range(10):
-            selected = blinking_selection_animation(remaining_pool)
-            with placeholder:
-                st.markdown(f"## 🎉 {selected} 🎉")
+            selected = blinking_selection_animation(remaining_pool, display_placeholder)
+            display_placeholder.markdown(f"## 🎉 {selected} 🎉")
             selected_members.append(selected)
             time.sleep(1)
         
@@ -54,11 +50,9 @@ def main():
         final_placeholder = st.empty()
         
         for _ in range(3):
-            with final_placeholder:
-                st.subheader("✨✨✨✨✨")
+            final_placeholder.subheader("✨✨✨✨✨")
             time.sleep(0.5)
-            with final_placeholder:
-                st.subheader("🎇🎇🎇🎇🎇")
+            final_placeholder.subheader("🎇🎇🎇🎇🎇")
             time.sleep(0.5)
         
         final_placeholder.empty()
