@@ -9,8 +9,7 @@ def select_members():
         "Iman Alam", "Amna Younus", "Ayesha", "Fatima Hammad", "Moaviz Waheed",
         "Ukasha Waqas", "Azoha Shahid", "Mr and Mrs Atta-ul-Latif Khawaja", "Enaas Muzammil",
         "Abdul Haseeb", "Iqra Eman", "Iqra Eman", "Maryam Zia Dar", "Nimra Rafiq", "Farakh",
-        "Anna Kamran", "Urwa Ahmad", "Abdullah Ali Chughtai", "Ibrahim Asad", "Alizeh Shahid",
-        "Umar Usama"
+        "Anna Kamran", "Urwa Ahmad", "Abdullah Ali Chughtai", "Ibrahim Asad", "Alizeh Shahid"
     ]
     
     remaining_members = list(set(all_members) - set(fixed_members))
@@ -19,19 +18,33 @@ def select_members():
     
     return fixed_members + random_members
 
+def blinking_selection_animation(members):
+    placeholder = st.empty()
+    
+    for _ in range(10):  # Blink effect
+        with placeholder:
+            st.subheader(f"🔄 {random.choice(members)} 🔄")
+        time.sleep(0.3)
+    
+    selected = random.choice(members)
+    return selected
+
 def main():
     st.title("🔮 Random Member Selector")
     
     if st.button("Start Selection 🎲"):
-        selected_members = select_members()
+        selected_members = []
+        all_candidates = select_members()
+        remaining_pool = all_candidates.copy()
         
         st.write("### Selecting Members:")
-        placeholder = st.empty()
         
-        for i, member in enumerate(selected_members):
-            with placeholder:
-                st.subheader(f"🎉 {member} 🎉")
-            time.sleep(1.5)
+        for _ in range(10):
+            selected = blinking_selection_animation(remaining_pool)
+            st.subheader(f"🎉 {selected} 🎉")
+            selected_members.append(selected)
+            remaining_pool.remove(selected)
+            time.sleep(1)
         
         time.sleep(1)
         
