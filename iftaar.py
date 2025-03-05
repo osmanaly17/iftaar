@@ -3,7 +3,7 @@ import random
 import time
 
 def select_members():
-    fixed_members = ["Usman", "Azoha", "Usama", "Arqam", "Reyan"]
+    fixed_members = ["Usman", "Azoha", "Usama", "Arqam", "Reyan", "Enaas Muzammil"]
     all_members = [
         "Laiba Javed", "Junaid Fayyaz", "Zohaa Ajmal", "Mohammad Reyan", "Azalfa Aarij",
         "Iman Alam", "Amna Younus", "Ayesha", "Fatima Hammad", "Moaviz Waheed",
@@ -14,7 +14,7 @@ def select_members():
     
     remaining_members = list(set(all_members) - set(fixed_members))
     random.shuffle(remaining_members)
-    random_members = random.sample(remaining_members, 5)
+    random_members = random.sample(remaining_members, 4)  # Now selecting 4 instead of 5 since Enaas is fixed
     
     return fixed_members + random_members, all_members  # Return full list for blinking effect
 
